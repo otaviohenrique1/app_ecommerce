@@ -1,15 +1,11 @@
-import 'package:flutter/cupertino.dart';
-
-import '../models/carrinho_produto_model.dart';
+import 'package:flutter/material.dart';
+import 'package:app_ecommerce/models/carrinho_produto_model.dart';
 
 class CarrinhoProvider extends ChangeNotifier {
   List<CarrinhoProdutoModel> _carrinhoListaProdutos = [];
-  double _precoTotal = 0;
 
   List<CarrinhoProdutoModel> get carrinhoListaProdutos =>
       _carrinhoListaProdutos;
-
-  double get precoTotal => _precoTotal;
 
   int get quantodadeItensTotal => _carrinhoListaProdutos.length;
 
