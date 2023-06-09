@@ -12,8 +12,15 @@ class CarrinhoProvider extends ChangeNotifier {
   double get precoTotal => _precoTotal;
 
   adicionarProduto(CarrinhoProdutoModel produto) {
-    _carrinhoListaProdutos.add(produto);
-    notifyListeners();
+    var buscaItem = _carrinhoListaProdutos
+        .firstWhere((element) => element.id == produto.id);
+
+    if (buscaItem.id != produto.id) {
+      _carrinhoListaProdutos.add(produto);
+      notifyListeners();
+    } else {
+      atualizarQuantidade(produto.id);
+    }
   }
 
   calculaValorTotal() {
@@ -32,11 +39,14 @@ class CarrinhoProvider extends ChangeNotifier {
     _carrinhoListaProdutos = [];
   }
 
-  atualizarPorQuantidade(String id, double quantidade, double precoQuantidade) {
+  atualizarQuantidade(String id) {
     for (var i = 0; i < _carrinhoListaProdutos.length; i++) {
       if (_carrinhoListaProdutos[i].id == id) {
-        _carrinhoListaProdutos[i].quantidade = quantidade;
-        _carrinhoListaProdutos[i].precoQuantidade = precoQuantidade;
+        _carrinhoListaProdutos[i].quantidade =
+            _carrinhoListaProdutos[i].quantidade + 1;
+        _carrinhoListaProdutos[i].precoQuantidade =
+            _carrinhoListaProdutos[i].quantidade *
+                _carrinhoListaProdutos[i].preco;
         break;
       }
     }
