@@ -15,32 +15,29 @@ class CarrinhoCompras extends StatefulWidget {
 class _CarrinhoComprasState extends State<CarrinhoCompras> {
   @override
   Widget build(BuildContext context) {
-    CarrinhoProvider providerCarrinho =
-        Provider.of<CarrinhoProvider>(context, listen: false);
-
     return Scaffold(
       appBar: AppBar(
         title: const Text("HomePage"),
       ),
-      body: ListView.builder(
-        itemCount: providerCarrinho.carrinhoListaProdutos.length,
-        itemBuilder: (context, index) {
-          CarrinhoProdutoModel item =
-              providerCarrinho.carrinhoListaProdutos[index];
-          String nome = item.nome;
-          double quantidade = item.quantidade;
-          double precoQuantidade = item.precoQuantidade;
-          String quantidadePreco = "$quantidade - $precoQuantidade";
+      body: Consumer<CarrinhoProvider>(
+        builder: (context, carrinhoProviderConsumer, child) {
+          return ListView.builder(
+            itemCount: carrinhoProviderConsumer.carrinhoListaProdutos.length,
+            itemBuilder: (context, index) {
+              CarrinhoProdutoModel item =
+                  carrinhoProviderConsumer.carrinhoListaProdutos[index];
+              String nome = item.nome;
+              double quantidade = item.quantidade;
+              double precoQuantidade = item.precoQuantidade;
+              String quantidadePreco = "$quantidade - $precoQuantidade";
 
-          return Column(
-            children: [
-              ListTile(
-                title: Text(nome),
-                subtitle: Text(quantidadePreco),
-              ),
-              Consumer<CarrinhoProvider>(
-                builder: (context, carrinhoProviderConsumer, child) {
-                  return Row(
+              return Column(
+                children: [
+                  ListTile(
+                    title: Text(nome),
+                    subtitle: Text(quantidadePreco),
+                  ),
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       IconButton(
@@ -64,11 +61,11 @@ class _CarrinhoComprasState extends State<CarrinhoCompras> {
                         icon: const Icon(Icons.delete),
                       ),
                     ],
-                  );
-                },
-              ),
-              const Divider(color: Colors.black),
-            ],
+                  ),
+                  const Divider(color: Colors.black),
+                ],
+              );
+            },
           );
         },
       ),
