@@ -42,7 +42,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      body: _Lista(lista: listaProdutos),
+      body: _Lista(lista: listaProdutosTeste),
     );
   }
 }
