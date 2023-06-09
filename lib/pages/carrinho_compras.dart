@@ -15,6 +15,8 @@ class CarrinhoCompras extends StatefulWidget {
 class _CarrinhoComprasState extends State<CarrinhoCompras> {
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text("Carrinho"),
@@ -36,59 +38,43 @@ class _CarrinhoComprasState extends State<CarrinhoCompras> {
               const SizedBox(height: 16),
               Text(
                 "Total: R\$ ${carrinhoProviderConsumer.calculaValorTotal().toStringAsFixed(2)}",
-                style: Theme.of(context).textTheme.headlineSmall,
+                style: theme.textTheme.headlineSmall,
               ),
+              const Divider(color: Colors.black),
               Expanded(
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount:
-                      carrinhoProviderConsumer.carrinhoListaProdutos.length,
-                  itemBuilder: (context, index) {
-                    CarrinhoProdutoModel item =
-                        carrinhoProviderConsumer.carrinhoListaProdutos[index];
-                    String nome = item.nome;
-                    double quantidade = item.quantidade;
-                    double precoQuantidade = item.precoQuantidade;
-                    String quantidadePreco = "$quantidade - $precoQuantidade";
+                child: (carrinhoProviderConsumer.carrinhoListaProdutos.isEmpty)
+                    ? Center(
+                        child: Text(
+                          "Lista vazia",
+                          style: theme.textTheme.headlineLarge,
+                        ),
+                      )
+                    : ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: carrinhoProviderConsumer
+                            .carrinhoListaProdutos.length,
+                        itemBuilder: (context, index) {
+                          CarrinhoProdutoModel item = carrinhoProviderConsumer
+                              .carrinhoListaProdutos[index];
 
-                    return Column(
-                      children: [
-                        ListTile(
-                          title: Text(nome),
-                          subtitle: Text(quantidadePreco),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            IconButton(
-                              onPressed: () {
-                                carrinhoProviderConsumer.adicionaQuantidade(
-                                    item.id, 1);
-                              },
-                              icon: const Icon(Icons.add),
-                            ),
-                            IconButton(
-                              onPressed: () {
-                                carrinhoProviderConsumer.removerQuantidade(
-                                    item.id, 1);
-                              },
-                              icon: const Icon(Icons.remove),
-                            ),
-                            IconButton(
-                              onPressed: () {
-                                carrinhoProviderConsumer
-                                    .removerProduto(item.id);
-                              },
-                              icon: const Icon(Icons.delete),
-                            ),
-                          ],
-                        ),
-                        const Divider(color: Colors.black),
-                      ],
-                    );
-                  },
-                ),
+                          return _Item(
+                            item: item,
+                            onPressedAdicionaQuantidade: () {
+                              carrinhoProviderConsumer.adicionaQuantidade(
+                                  item.id, 1);
+                            },
+                            onPressedRemoverQuantidade: () {
+                              carrinhoProviderConsumer.removerQuantidade(
+                                  item.id, 1);
+                            },
+                            onPressedRemoverProduto: () {
+                              carrinhoProviderConsumer.removerProduto(item.id);
+                            },
+                          );
+                        },
+                      ),
               ),
+              const Divider(color: Colors.black),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: Row(
@@ -113,6 +99,57 @@ class _CarrinhoComprasState extends State<CarrinhoCompras> {
           );
         },
       ),
+    );
+  }
+}
+
+class _Item extends StatelessWidget {
+  const _Item({
+    // ignore: unused_element
+    super.key,
+    required this.item,
+    required this.onPressedAdicionaQuantidade,
+    required this.onPressedRemoverQuantidade,
+    required this.onPressedRemoverProduto,
+  });
+
+  final CarrinhoProdutoModel item;
+  final Function() onPressedAdicionaQuantidade;
+  final Function() onPressedRemoverQuantidade;
+  final Function() onPressedRemoverProduto;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        ListTile(
+          leading: const SizedBox(
+            width: 50,
+            height: 50,
+            child: Placeholder(),
+          ),
+          title: Text(item.nome),
+          subtitle: Text("${item.quantidade} - ${item.precoQuantidade}"),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            IconButton(
+              onPressed: onPressedAdicionaQuantidade,
+              icon: const Icon(Icons.add),
+            ),
+            IconButton(
+              onPressed: onPressedRemoverQuantidade,
+              icon: const Icon(Icons.remove),
+            ),
+            IconButton(
+              onPressed: onPressedRemoverProduto,
+              icon: const Icon(Icons.delete),
+            ),
+          ],
+        ),
+        const Divider(color: Colors.black),
+      ],
     );
   }
 }
