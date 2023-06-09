@@ -17,12 +17,16 @@ class _CarrinhoComprasState extends State<CarrinhoCompras> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("HomePage"),
+        title: const Text("Carrinho"),
         actions: [
           IconButton(
             onPressed: () {},
-            icon: const Icon(Icons.check),
-          )
+            icon: const Icon(Icons.search),
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.account_circle),
+          ),
         ],
       ),
       body: Consumer<CarrinhoProvider>(
@@ -34,53 +38,76 @@ class _CarrinhoComprasState extends State<CarrinhoCompras> {
                 "Total: R\$ ${carrinhoProviderConsumer.calculaValorTotal().toStringAsFixed(2)}",
                 style: Theme.of(context).textTheme.headlineSmall,
               ),
-              ListView.builder(
-                shrinkWrap: true,
-                itemCount:
-                    carrinhoProviderConsumer.carrinhoListaProdutos.length,
-                itemBuilder: (context, index) {
-                  CarrinhoProdutoModel item =
-                      carrinhoProviderConsumer.carrinhoListaProdutos[index];
-                  String nome = item.nome;
-                  double quantidade = item.quantidade;
-                  double precoQuantidade = item.precoQuantidade;
-                  String quantidadePreco = "$quantidade - $precoQuantidade";
+              Expanded(
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount:
+                      carrinhoProviderConsumer.carrinhoListaProdutos.length,
+                  itemBuilder: (context, index) {
+                    CarrinhoProdutoModel item =
+                        carrinhoProviderConsumer.carrinhoListaProdutos[index];
+                    String nome = item.nome;
+                    double quantidade = item.quantidade;
+                    double precoQuantidade = item.precoQuantidade;
+                    String quantidadePreco = "$quantidade - $precoQuantidade";
 
-                  return Column(
-                    children: [
-                      ListTile(
-                        title: Text(nome),
-                        subtitle: Text(quantidadePreco),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          IconButton(
-                            onPressed: () {
-                              carrinhoProviderConsumer.adicionaQuantidade(
-                                  item.id, 1);
-                            },
-                            icon: const Icon(Icons.add),
-                          ),
-                          IconButton(
-                            onPressed: () {
-                              carrinhoProviderConsumer.removerQuantidade(
-                                  item.id, 1);
-                            },
-                            icon: const Icon(Icons.remove),
-                          ),
-                          IconButton(
-                            onPressed: () {
-                              carrinhoProviderConsumer.removerProduto(item.id);
-                            },
-                            icon: const Icon(Icons.delete),
-                          ),
-                        ],
-                      ),
-                      const Divider(color: Colors.black),
-                    ],
-                  );
-                },
+                    return Column(
+                      children: [
+                        ListTile(
+                          title: Text(nome),
+                          subtitle: Text(quantidadePreco),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            IconButton(
+                              onPressed: () {
+                                carrinhoProviderConsumer.adicionaQuantidade(
+                                    item.id, 1);
+                              },
+                              icon: const Icon(Icons.add),
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                carrinhoProviderConsumer.removerQuantidade(
+                                    item.id, 1);
+                              },
+                              icon: const Icon(Icons.remove),
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                carrinhoProviderConsumer
+                                    .removerProduto(item.id);
+                              },
+                              icon: const Icon(Icons.delete),
+                            ),
+                          ],
+                        ),
+                        const Divider(color: Colors.black),
+                      ],
+                    );
+                  },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () {},
+                      child: const Text("Finalizar"),
+                    ),
+                    const SizedBox(width: 16),
+                    ElevatedButton(
+                      onPressed: () {
+                        carrinhoProviderConsumer.limparLista();
+                        Navigator.pop(context);
+                      },
+                      child: const Text("Cancelar"),
+                    ),
+                  ],
+                ),
               ),
             ],
           );

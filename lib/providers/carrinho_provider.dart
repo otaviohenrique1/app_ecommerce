@@ -59,6 +59,7 @@ class CarrinhoProvider extends ChangeNotifier {
 
   limparLista() {
     _carrinhoListaProdutos = [];
+    notifyListeners();
   }
 
   atualizarQuantidade(String id) {

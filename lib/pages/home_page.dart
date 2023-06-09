@@ -24,13 +24,22 @@ class _HomePageState extends State<HomePage> {
           IconButton(
             onPressed: () {
               Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const CarrinhoCompras(),
-                  ));
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const CarrinhoCompras(),
+                ),
+              );
             },
             icon: const Icon(Icons.shopping_cart),
-          )
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.search),
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.account_circle),
+          ),
         ],
       ),
       body: ListView.builder(
