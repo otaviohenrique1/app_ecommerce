@@ -11,9 +11,20 @@ class CarrinhoProvider extends ChangeNotifier {
 
   double get precoTotal => _precoTotal;
 
-  adicionarProduto(CarrinhoProdutoModel produto) {
-    var buscaItem = _carrinhoListaProdutos
-        .firstWhere((element) => element.id == produto.id);
+  adicionaProduto(CarrinhoProdutoModel produto) {
+    CarrinhoProdutoModel buscaItem = _carrinhoListaProdutos.firstWhere(
+      (element) => element.id == produto.id,
+      orElse: () => CarrinhoProdutoModel(
+        id: "",
+        nome: "",
+        preco: 0,
+        categoria: "",
+        descricao: "",
+        quantidade: 0,
+        precoQuantidade: 0,
+        dataCriacao: "",
+      ),
+    );
 
     if (buscaItem.id != produto.id) {
       _carrinhoListaProdutos.add(produto);
