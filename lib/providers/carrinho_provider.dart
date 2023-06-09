@@ -11,6 +11,8 @@ class CarrinhoProvider extends ChangeNotifier {
 
   double get precoTotal => _precoTotal;
 
+  int get quantodadeItensTotal => _carrinhoListaProdutos.length;
+
   // buscaTodos () {
   //   _carrinhoListaProdutos
   // }
@@ -38,11 +40,16 @@ class CarrinhoProvider extends ChangeNotifier {
     }
   }
 
-  calculaValorTotal() {
-    _precoTotal = _carrinhoListaProdutos
-        .map((produto) => produto.preco)
-        .reduce((valor1, valor2) => valor1 + valor2);
-    notifyListeners();
+  double calculaValorTotal() {
+    double total = 0;
+    if (_carrinhoListaProdutos.isNotEmpty) {
+      total = _carrinhoListaProdutos
+          .map((produto) => produto.precoQuantidade)
+          .reduce((valor1, valor2) => valor1 + valor2);
+    } else {
+      total = 0;
+    }
+    return total;
   }
 
   removerProduto(String id) {
@@ -56,12 +63,10 @@ class CarrinhoProvider extends ChangeNotifier {
 
   atualizarQuantidade(String id) {
     for (var i = 0; i < _carrinhoListaProdutos.length; i++) {
-      if (_carrinhoListaProdutos[i].id == id) {
-        _carrinhoListaProdutos[i].quantidade =
-            _carrinhoListaProdutos[i].quantidade + 1;
-        _carrinhoListaProdutos[i].precoQuantidade =
-            _carrinhoListaProdutos[i].quantidade *
-                _carrinhoListaProdutos[i].preco;
+      CarrinhoProdutoModel item = _carrinhoListaProdutos[i];
+      if (item.id == id) {
+        item.quantidade = item.quantidade + 1;
+        item.precoQuantidade = item.quantidade * item.preco;
         break;
       }
     }
@@ -70,12 +75,10 @@ class CarrinhoProvider extends ChangeNotifier {
 
   adicionaQuantidade(String id, double novaQuantidade) {
     for (var i = 0; i < _carrinhoListaProdutos.length; i++) {
-      if (_carrinhoListaProdutos[i].id == id) {
-        _carrinhoListaProdutos[i].quantidade =
-            _carrinhoListaProdutos[i].quantidade + novaQuantidade;
-        _carrinhoListaProdutos[i].precoQuantidade =
-            _carrinhoListaProdutos[i].quantidade *
-                _carrinhoListaProdutos[i].preco;
+      CarrinhoProdutoModel item = _carrinhoListaProdutos[i];
+      if (item.id == id) {
+        item.quantidade = item.quantidade + novaQuantidade;
+        item.precoQuantidade = item.quantidade * item.preco;
         break;
       }
     }
@@ -84,12 +87,16 @@ class CarrinhoProvider extends ChangeNotifier {
 
   removerQuantidade(String id, double novaQuantidade) {
     for (var i = 0; i < _carrinhoListaProdutos.length; i++) {
-      if (_carrinhoListaProdutos[i].id == id) {
-        _carrinhoListaProdutos[i].quantidade =
-            _carrinhoListaProdutos[i].quantidade - novaQuantidade;
-        _carrinhoListaProdutos[i].precoQuantidade =
-            _carrinhoListaProdutos[i].quantidade *
-                _carrinhoListaProdutos[i].preco;
+      CarrinhoProdutoModel item = _carrinhoListaProdutos[i];
+      if (item.id == id) {
+        double resultado = item.quantidade - novaQuantidade;
+        if (resultado <= 0) {
+          item.quantidade = 1;
+          item.precoQuantidade = 1 * item.preco;
+        } else {
+          item.quantidade = resultado;
+          item.precoQuantidade = item.quantidade * item.preco;
+        }
         break;
       }
     }

@@ -18,54 +18,71 @@ class _CarrinhoComprasState extends State<CarrinhoCompras> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("HomePage"),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.check),
+          )
+        ],
       ),
       body: Consumer<CarrinhoProvider>(
         builder: (context, carrinhoProviderConsumer, child) {
-          return ListView.builder(
-            itemCount: carrinhoProviderConsumer.carrinhoListaProdutos.length,
-            itemBuilder: (context, index) {
-              CarrinhoProdutoModel item =
-                  carrinhoProviderConsumer.carrinhoListaProdutos[index];
-              String nome = item.nome;
-              double quantidade = item.quantidade;
-              double precoQuantidade = item.precoQuantidade;
-              String quantidadePreco = "$quantidade - $precoQuantidade";
+          return Column(
+            children: [
+              const SizedBox(height: 16),
+              Text(
+                "Total: R\$ ${carrinhoProviderConsumer.calculaValorTotal().toStringAsFixed(2)}",
+                style: Theme.of(context).textTheme.headlineSmall,
+              ),
+              ListView.builder(
+                shrinkWrap: true,
+                itemCount:
+                    carrinhoProviderConsumer.carrinhoListaProdutos.length,
+                itemBuilder: (context, index) {
+                  CarrinhoProdutoModel item =
+                      carrinhoProviderConsumer.carrinhoListaProdutos[index];
+                  String nome = item.nome;
+                  double quantidade = item.quantidade;
+                  double precoQuantidade = item.precoQuantidade;
+                  String quantidadePreco = "$quantidade - $precoQuantidade";
 
-              return Column(
-                children: [
-                  ListTile(
-                    title: Text(nome),
-                    subtitle: Text(quantidadePreco),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                  return Column(
                     children: [
-                      IconButton(
-                        onPressed: () {
-                          carrinhoProviderConsumer.adicionaQuantidade(
-                              item.id, 1);
-                        },
-                        icon: const Icon(Icons.add),
+                      ListTile(
+                        title: Text(nome),
+                        subtitle: Text(quantidadePreco),
                       ),
-                      IconButton(
-                        onPressed: () {
-                          carrinhoProviderConsumer.removerQuantidade(
-                              item.id, 1);
-                        },
-                        icon: const Icon(Icons.remove),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              carrinhoProviderConsumer.adicionaQuantidade(
+                                  item.id, 1);
+                            },
+                            icon: const Icon(Icons.add),
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              carrinhoProviderConsumer.removerQuantidade(
+                                  item.id, 1);
+                            },
+                            icon: const Icon(Icons.remove),
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              carrinhoProviderConsumer.removerProduto(item.id);
+                            },
+                            icon: const Icon(Icons.delete),
+                          ),
+                        ],
                       ),
-                      IconButton(
-                        onPressed: () {
-                          carrinhoProviderConsumer.removerProduto(item.id);
-                        },
-                        icon: const Icon(Icons.delete),
-                      ),
+                      const Divider(color: Colors.black),
                     ],
-                  ),
-                  const Divider(color: Colors.black),
-                ],
-              );
-            },
+                  );
+                },
+              ),
+            ],
           );
         },
       ),
