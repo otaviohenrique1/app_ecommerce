@@ -20,14 +20,15 @@ class App extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
         appBarTheme: const AppBarTheme(
-            backgroundColor: Colors.blueGrey,
-            titleTextStyle: TextStyle(
-              color: Colors.white,
-              fontSize: 22,
-            ),
-            iconTheme: IconThemeData(
-              color: Colors.white,
-            )),
+          backgroundColor: Colors.blueGrey,
+          titleTextStyle: TextStyle(
+            color: Colors.white,
+            fontSize: 22,
+          ),
+          iconTheme: IconThemeData(
+            color: Colors.white,
+          ),
+        ),
       ),
       home: const HomePage(),
     );
