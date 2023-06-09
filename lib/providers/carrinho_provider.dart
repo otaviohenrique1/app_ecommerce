@@ -11,6 +11,10 @@ class CarrinhoProvider extends ChangeNotifier {
 
   double get precoTotal => _precoTotal;
 
+  // buscaTodos () {
+  //   _carrinhoListaProdutos
+  // }
+
   adicionaProduto(CarrinhoProdutoModel produto) {
     CarrinhoProdutoModel buscaItem = _carrinhoListaProdutos.firstWhere(
       (element) => element.id == produto.id,
