@@ -17,68 +17,67 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("HomePage"),
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const CarrinhoCompras(),
-                ),
-              );
+    List<ProdutoModel> lista = listaProdutosTeste;
+    return Consumer<CarrinhoProvider>(
+      builder: (context, carrinhoProviderConsumer, child) {
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text("HomePage"),
+            actions: [
+              IconButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const CarrinhoCompras(),
+                    ),
+                  );
+                },
+                icon: const Icon(Icons.shopping_cart),
+              ),
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.search),
+              ),
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.account_circle),
+              ),
+            ],
+          ),
+          body: ListView.builder(
+            itemCount: lista.length,
+            itemBuilder: (context, index) {
+              ProdutoModel item = lista[index];
+              String nome = item.nome;
+              String categoria = item.categoria;
+              String descricao = item.descricao;
+              double preco = item.preco;
+              String precoFormatado =
+                  "R\$ ${preco.toStringAsFixed(2).replaceAll(".", ",")}";
+              String uuid = geraUuid();
+              String dataHora = geraDataHoraFormatada();
+
+              return _Item(
+                  nome: nome,
+                  preco: precoFormatado,
+                  onPressedAdicionar: () {
+                    double quantidade = 1;
+                    carrinhoProviderConsumer.adicionaProduto(
+                      CarrinhoProdutoModel(
+                        id: uuid,
+                        nome: nome,
+                        preco: preco,
+                        categoria: categoria,
+                        descricao: descricao,
+                        quantidade: quantidade,
+                        precoQuantidade: preco * quantidade,
+                        dataCriacao: dataHora,
+                      ),
+                    );
+                  });
             },
-            icon: const Icon(Icons.shopping_cart),
           ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.search),
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.account_circle),
-          ),
-        ],
-      ),
-      body: _Lista(lista: listaProdutosTeste),
-    );
-  }
-}
-
-class _Lista extends StatelessWidget {
-  const _Lista({
-    // ignore: unused_element
-    super.key,
-    required this.lista,
-  });
-
-  final List<ProdutoModel> lista;
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: lista.length,
-      itemBuilder: (context, index) {
-        ProdutoModel item = lista[index];
-        String nome = item.nome;
-        String categoria = item.categoria;
-        String descricao = item.descricao;
-        double preco = item.preco;
-        String precoFormatado =
-            "R\$ ${preco.toStringAsFixed(2).replaceAll(".", ",")}";
-        String uuid = geraUuid();
-        String dataHora = geraDataHoraFormatada();
-
-        return _Item(
-          nome: nome,
-          precoFormatado: precoFormatado,
-          uuid: uuid,
-          preco: preco,
-          categoria: categoria,
-          descricao: descricao,
-          dataHora: dataHora,
         );
       },
     );
@@ -90,21 +89,13 @@ class _Item extends StatelessWidget {
     // ignore: unused_element
     super.key,
     required this.nome,
-    required this.precoFormatado,
-    required this.uuid,
     required this.preco,
-    required this.categoria,
-    required this.descricao,
-    required this.dataHora,
+    required this.onPressedAdicionar,
   });
 
   final String nome;
-  final String precoFormatado;
-  final String uuid;
-  final double preco;
-  final String categoria;
-  final String descricao;
-  final String dataHora;
+  final String preco;
+  final Function() onPressedAdicionar;
 
   @override
   Widget build(BuildContext context) {
@@ -115,28 +106,10 @@ class _Item extends StatelessWidget {
         child: Placeholder(),
       ),
       title: Text(nome),
-      subtitle: Text(precoFormatado),
-      trailing: Consumer<CarrinhoProvider>(
-        builder: (context, carrinhoProviderConsumer, child) {
-          return IconButton(
-            onPressed: () {
-              double quantidade = 1;
-              carrinhoProviderConsumer.adicionaProduto(
-                CarrinhoProdutoModel(
-                  id: uuid,
-                  nome: nome,
-                  preco: preco,
-                  categoria: categoria,
-                  descricao: descricao,
-                  quantidade: quantidade,
-                  precoQuantidade: preco * quantidade,
-                  dataCriacao: dataHora,
-                ),
-              );
-            },
-            icon: const Icon(Icons.add, size: 32),
-          );
-        },
+      subtitle: Text(preco),
+      trailing: IconButton(
+        onPressed: onPressedAdicionar,
+        icon: const Icon(Icons.add, size: 32),
       ),
     );
   }
