@@ -1,6 +1,6 @@
 import 'package:app_ecommerce/models/produto_model.dart';
 
-List<ProdutoModel> listaProdutos = [
+List<ProdutoModel> listaProdutosTeste = [
   ProdutoModel(
     id: "1b1599ae-8ae6-4390-a5ed-0406f71eea13",
     nome: "Leite de vaca",
