@@ -1,3 +1,4 @@
+import 'package:app_ecommerce/pages/carrinho_compras.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:app_ecommerce/utils/helpers.dart';
@@ -19,6 +20,18 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("HomePage"),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const CarrinhoCompras(),
+                  ));
+            },
+            icon: const Icon(Icons.shopping_cart),
+          )
+        ],
       ),
       body: ListView.builder(
         itemCount: listaProdutos.length,

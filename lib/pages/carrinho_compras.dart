@@ -23,7 +23,7 @@ class _CarrinhoComprasState extends State<CarrinhoCompras> {
         title: const Text("HomePage"),
       ),
       body: ListView.builder(
-        itemCount: listaProdutos.length,
+        itemCount: providerCarrinho.carrinhoListaProdutos.length,
         itemBuilder: (context, index) {
           CarrinhoProdutoModel item =
               providerCarrinho.carrinhoListaProdutos[index];
