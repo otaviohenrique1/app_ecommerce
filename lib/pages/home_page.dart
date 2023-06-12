@@ -18,98 +18,66 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     List<ProdutoModel> lista = listaProdutosTeste;
-    return Consumer<CarrinhoProvider>(
-      builder: (context, carrinhoProviderConsumer, child) {
-        return Scaffold(
-          appBar: AppBar(
-            title: const Text("HomePage"),
-            actions: [
-              IconButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const CarrinhoCompras(),
-                    ),
-                  );
-                },
-                icon: const Icon(Icons.shopping_cart),
-              ),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.search),
-              ),
-              IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.account_circle),
-              ),
-            ],
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("HomePage"),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const CarrinhoCompras(),
+                ),
+              );
+            },
+            icon: const Icon(Icons.shopping_cart),
           ),
-          body: ListView.builder(
-            itemCount: lista.length,
-            itemBuilder: (context, index) {
-              ProdutoModel item = lista[index];
-              String nome = item.nome;
-              String categoria = item.categoria;
-              String descricao = item.descricao;
-              double preco = item.preco;
-              String precoFormatado =
-                  "R\$ ${preco.toStringAsFixed(2).replaceAll(".", ",")}";
-              String uuid = geraUuid();
-              String dataHora = geraDataHoraFormatada();
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.search),
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.account_circle),
+          ),
+        ],
+      ),
+      body: ListView.builder(
+        itemCount: lista.length,
+        itemBuilder: (context, index) {
+          ProdutoModel item = lista[index];
 
-              return _Item(
-                  nome: nome,
-                  preco: precoFormatado,
-                  onPressedAdicionar: () {
-                    double quantidade = 1;
+          return ListTile(
+            leading: const SizedBox(
+              width: 50,
+              height: 50,
+              child: Placeholder(),
+            ),
+            title: Text(item.nome),
+            subtitle: Text(
+                "R\$ ${item.preco.toStringAsFixed(2).replaceAll(".", ",")}"),
+            trailing: Consumer<CarrinhoProvider>(
+              builder: (context, carrinhoProviderConsumer, child) {
+                return IconButton(
+                  onPressed: () {
                     carrinhoProviderConsumer.adicionaProduto(
-                      CarrinhoProdutoModel(
-                        id: uuid,
-                        nome: nome,
-                        preco: preco,
-                        categoria: categoria,
-                        descricao: descricao,
-                        quantidade: quantidade,
-                        precoQuantidade: preco * quantidade,
-                        dataCriacao: dataHora,
+                      ProdutoModel(
+                        id: geraUuid(),
+                        nome: item.nome,
+                        preco: item.preco,
+                        categoria: item.categoria,
+                        descricao: item.descricao,
+                        dataCriacao: geraDataHoraFormatada(),
                       ),
                     );
-                  });
-            },
-          ),
-        );
-      },
-    );
-  }
-}
-
-class _Item extends StatelessWidget {
-  const _Item({
-    // ignore: unused_element
-    super.key,
-    required this.nome,
-    required this.preco,
-    required this.onPressedAdicionar,
-  });
-
-  final String nome;
-  final String preco;
-  final Function() onPressedAdicionar;
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      leading: const SizedBox(
-        width: 50,
-        height: 50,
-        child: Placeholder(),
-      ),
-      title: Text(nome),
-      subtitle: Text(preco),
-      trailing: IconButton(
-        onPressed: onPressedAdicionar,
-        icon: const Icon(Icons.add, size: 32),
+                  },
+                  icon: const Icon(Icons.add, size: 32),
+                );
+              },
+            ),
+          );
+        },
       ),
     );
   }
