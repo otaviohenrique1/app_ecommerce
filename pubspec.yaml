@@ -91,5 +91,53 @@ flutter:
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
   #
+  fonts:
+    - family: PublicSans
+      fonts:
+      - asset: assets/fonts/PublicSans-Black.ttf
+        weight: 900
+      - asset: assets/fonts/PublicSans-BlackItalic.ttf
+        weight: 900
+        style: italic
+      - asset: assets/fonts/PublicSans-Bold.ttf
+        weight: 700
+      - asset: assets/fonts/PublicSans-BoldItalic.ttf
+        weight: 700
+        style: italic
+      - asset: assets/fonts/PublicSans-ExtraBold.ttf
+        weight: 800
+      - asset: assets/fonts/PublicSans-ExtraBoldItalic.ttf
+        weight: 800
+        style: italic
+      - asset: assets/fonts/PublicSans-ExtraLight.ttf
+        weight: 200
+      - asset: assets/fonts/PublicSans-ExtraLightItalic.ttf
+        weight: 200
+        style: italic
+      - asset: assets/fonts/PublicSans-Italic.ttf
+        weight: 400
+        style: italic
+      - asset: assets/fonts/PublicSans-Light.ttf
+        weight: 300
+      - asset: assets/fonts/PublicSans-LightItalic.ttf
+        weight: 300
+        style: italic
+      - asset: assets/fonts/PublicSans-Medium.ttf
+        weight: 500
+      - asset: assets/fonts/PublicSans-MediumItalic.ttf
+        weight: 500
+        style: italic
+      - asset: assets/fonts/PublicSans-Regular.ttf
+        weight: 400
+      - asset: assets/fonts/PublicSans-SemiBold.ttf
+        weight: 600
+      - asset: assets/fonts/PublicSans-SemiBoldItalic.ttf
+        weight: 600
+        style: italic
+      - asset: assets/fonts/PublicSans-Thin.ttf
+        weight: 100
+      - asset: assets/fonts/PublicSans-ThinItalic.ttf
+        weight: 100
+        style: italic
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
