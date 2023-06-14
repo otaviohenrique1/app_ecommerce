@@ -11,9 +11,9 @@ class CarrinhoProvider extends ChangeNotifier {
 
   int get quantodadeItensTotal => _carrinhoListaProdutos.length;
 
-  adicionaProduto(ProdutoModel produto) {
+  adicionaProduto(ProdutoModel produto, String produtoId) {
     CarrinhoProdutoModel buscaItem = _carrinhoListaProdutos.firstWhere(
-      (element) => element.produtoId == produto.id,
+      (element) => element.produtoId == produtoId,
       orElse: () => CarrinhoProdutoModel(
         id: "",
         nome: "",
@@ -27,7 +27,7 @@ class CarrinhoProvider extends ChangeNotifier {
       ),
     );
 
-    if (buscaItem.id != produto.id) {
+    if (buscaItem.produtoId != produtoId) {
       _carrinhoListaProdutos.add(CarrinhoProdutoModel(
         id: geraUuid(),
         produtoId: produto.id,
@@ -42,13 +42,14 @@ class CarrinhoProvider extends ChangeNotifier {
       notifyListeners();
     } else {
       atualizarQuantidade(produto.id);
+      notifyListeners();
     }
   }
 
   atualizarQuantidade(String id) {
     for (var i = 0; i < _carrinhoListaProdutos.length; i++) {
       var item = _carrinhoListaProdutos[i];
-      if (item.id == id) {
+      if (item.produtoId == id) {
         item.quantidade = item.quantidade + 1;
         item.precoQuantidade = item.quantidade * item.preco;
         break;

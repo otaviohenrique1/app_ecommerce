@@ -4,7 +4,6 @@ import 'package:app_ecommerce/pages/carrinho_compras.dart';
 import 'package:app_ecommerce/utils/helpers.dart';
 import 'package:app_ecommerce/utils/listas.dart';
 import 'package:app_ecommerce/models/produto_model.dart';
-import 'package:app_ecommerce/models/carrinho_produto_model.dart';
 import 'package:app_ecommerce/providers/carrinho_provider.dart';
 
 class HomePage extends StatefulWidget {
@@ -63,13 +62,14 @@ class _HomePageState extends State<HomePage> {
                   onPressed: () {
                     carrinhoProviderConsumer.adicionaProduto(
                       ProdutoModel(
-                        id: geraUuid(),
+                        id: item.id,
                         nome: item.nome,
                         preco: item.preco,
                         categoria: item.categoria,
                         descricao: item.descricao,
-                        dataCriacao: geraDataHoraFormatada(),
+                        dataCriacao: item.dataCriacao,
                       ),
+                      item.id,
                     );
                   },
                   icon: const Icon(Icons.add, size: 32),
