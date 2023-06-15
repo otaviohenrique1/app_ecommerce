@@ -1,7 +1,7 @@
+import 'package:app_ecommerce/pages/detalhes_produto.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:app_ecommerce/pages/carrinho_compras.dart';
-import 'package:app_ecommerce/utils/helpers.dart';
 import 'package:app_ecommerce/utils/listas.dart';
 import 'package:app_ecommerce/models/produto_model.dart';
 import 'package:app_ecommerce/providers/carrinho_provider.dart';
@@ -48,6 +48,14 @@ class _HomePageState extends State<HomePage> {
           ProdutoModel item = lista[index];
 
           return ListTile(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => DetalhesProduto(id: item.id),
+                ),
+              );
+            },
             leading: const SizedBox(
               width: 50,
               height: 50,
