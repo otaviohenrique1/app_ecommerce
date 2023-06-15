@@ -67,6 +67,27 @@ flutter:
   # assets:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
+  assets:
+    - assets/images/vga01.jpg
+    - assets/images/vga02.jpg
+    - assets/images/vga03.jpg
+    - assets/images/vga04.jpg
+    - assets/images/vga05.jpg
+    - assets/images/vga06.jpg
+    - assets/images/vga07.jpg
+    - assets/images/vga08.jpg
+    - assets/images/vga09.jpg
+    - assets/images/vga10.jpg
+    - assets/images/vga11.jpg
+    - assets/images/vga12.jpg
+    - assets/images/vga13.jpg
+    - assets/images/vga14.jpg
+    - assets/images/vga15.jpg
+    - assets/images/vga16.jpg
+    - assets/images/vga17.jpg
+    - assets/images/vga18.jpg
+    - assets/images/vga19.jpg
+    - assets/images/vga20.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

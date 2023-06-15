@@ -56,10 +56,15 @@ class _HomePageState extends State<HomePage> {
                 ),
               );
             },
-            leading: const SizedBox(
+            leading: SizedBox(
               width: 50,
               height: 50,
-              child: Placeholder(),
+              child: Image(
+                height: 50,
+                width: 50,
+                image: AssetImage(item.foto),
+                fit: BoxFit.contain,
+              ),
             ),
             title: Text(item.nome),
             subtitle: Text(
@@ -71,6 +76,7 @@ class _HomePageState extends State<HomePage> {
                     carrinhoProviderConsumer.adicionaProduto(
                       ProdutoModel(
                         id: item.id,
+                        foto: item.foto,
                         nome: item.nome,
                         preco: item.preco,
                         categoria: item.categoria,

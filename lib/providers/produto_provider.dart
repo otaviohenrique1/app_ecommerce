@@ -6,6 +6,7 @@ class ProdutoProvider extends ChangeNotifier {
   List<ProdutoModel> _listaProdutos = [];
   ProdutoModel _produto = ProdutoModel(
     id: "",
+    foto: "",
     nome: "",
     preco: 0,
     categoria: "",
@@ -46,6 +47,7 @@ class ProdutoProvider extends ChangeNotifier {
       (element) => element.id == produtoId,
       orElse: () => ProdutoModel(
         id: "",
+        foto: "",
         nome: "",
         preco: 0,
         categoria: "",
@@ -58,6 +60,7 @@ class ProdutoProvider extends ChangeNotifier {
     } else {
       _produto = ProdutoModel(
         id: "",
+        foto: "",
         nome: "",
         preco: 0,
         categoria: "",

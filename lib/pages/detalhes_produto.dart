@@ -1,8 +1,6 @@
-import 'package:app_ecommerce/models/produto_model.dart';
-import 'package:app_ecommerce/providers/produto_provider.dart';
-import 'package:app_ecommerce/utils/listas.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:app_ecommerce/models/produto_model.dart';
+import 'package:app_ecommerce/utils/listas.dart';
 
 class DetalhesProduto extends StatefulWidget {
   const DetalhesProduto({
@@ -23,6 +21,7 @@ class _DetalhesProdutoState extends State<DetalhesProduto> {
       (element) => element.id == widget.id,
       orElse: () => ProdutoModel(
         id: "",
+        foto: "",
         nome: "",
         preco: 0,
         categoria: "",
@@ -35,16 +34,23 @@ class _DetalhesProdutoState extends State<DetalhesProduto> {
       appBar: AppBar(
         title: const Text("Detalhes"),
       ),
-      body: ListView(
-        padding: const EdgeInsets.all(16),
-        children: [
-          Text(produto.id),
-          Text(produto.nome),
-          Text(produto.preco.toString()),
-          Text(produto.categoria),
-          Text(produto.descricao),
-          Text(produto.dataCriacao),
-        ],
+      body: Center(
+        child: ListView(
+          padding: const EdgeInsets.all(16),
+          children: [
+            Image(
+              height: 200,
+              image: AssetImage(produto.foto),
+              fit: BoxFit.contain,
+            ),
+            Text(produto.id),
+            Text(produto.nome),
+            Text(produto.preco.toString()),
+            Text(produto.categoria),
+            Text(produto.descricao),
+            Text(produto.dataCriacao),
+          ],
+        ),
       ),
     );
   }

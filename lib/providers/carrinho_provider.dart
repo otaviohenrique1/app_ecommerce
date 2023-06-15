@@ -16,6 +16,7 @@ class CarrinhoProvider extends ChangeNotifier {
       (element) => element.produtoId == produtoId,
       orElse: () => CarrinhoProdutoModel(
         id: "",
+        foto: "",
         nome: "",
         preco: 0,
         categoria: "",
@@ -31,6 +32,7 @@ class CarrinhoProvider extends ChangeNotifier {
       _carrinhoListaProdutos.add(CarrinhoProdutoModel(
         id: geraUuid(),
         produtoId: produto.id,
+        foto: "",
         nome: produto.nome,
         preco: produto.preco,
         categoria: produto.categoria,

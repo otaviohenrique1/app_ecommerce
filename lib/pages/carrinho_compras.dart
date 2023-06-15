@@ -129,7 +129,8 @@ class _Item extends StatelessWidget {
             child: Placeholder(),
           ),
           title: Text(item.nome),
-          subtitle: Text("${item.quantidade} - ${item.precoQuantidade}"),
+          subtitle: Text(
+              "${item.quantidade} X R\$ ${item.precoQuantidade.toStringAsFixed(2)}"),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
